@@ -31,7 +31,7 @@ This will contains all needed styling
 
 Now, folder structure is very crucial. You will setup the folder structure like this.
 
-![alt text](image-1.png)
+![alt text](image-5.png)
 
 ## Create Navbar Component
 
@@ -790,6 +790,8 @@ export default App;
 You can see the `App.js` is very clean and minimal
 
 Below is the final folder application structure
+
+![alt text](image-4.png)
 
 ## Deploy on Netlify
 
