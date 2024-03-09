@@ -398,3 +398,331 @@ export default Search;
 ```
 
 ![alt text](demo_search_1.gif)
+
+## Setup React Router
+
+Now, it's time to setup the React Router. To make it simple, we will use version 5.2.0
+
+```bash
+npm install react-router-dom@5.2.0
+```
+
+After that, we will update the `App.js` to use the Router
+
+```js
+import React from "react";
+import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
+import "./App.css";
+import Navbar from "./components/layout/Navbar";
+import Search from "./components/users/Search";
+
+const App = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Navbar />
+        <div className="container">
+          <h1>GitHub Users Data</h1>
+          <Switch>
+            <Route exact path="/" component={Search} />
+          </Switch>
+        </div>
+      </Router>
+    </div>
+  );
+};
+
+export default App;
+```
+
+## Create `About` and `NotFound` components
+
+We will create the `About` to have the basic information of the project. The `NotFound` component is used to handle undefined route
+
+```js
+// About.js
+import React from "react";
+
+const About = () => {
+  return (
+    <div className="all-center">
+      <div className="textclass">
+        <h1 className="x-large text-primary">Github Finder App</h1>
+        <p className="lead">
+          This is a simple web application for finding Github users and their
+          repositories.
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export default About;
+```
+
+```js
+// NotFound.js
+import React from "react";
+
+const NotFound = () => {
+  return (
+    <div className="all-center">
+      <h1 className="x-large text-danger">404 - Page Not Found</h1>
+      <p className="lead">
+        Sorry, the page you are looking for does not exist.
+      </p>
+    </div>
+  );
+};
+
+export default NotFound;
+```
+
+Then, we have to update the `Navbar.js` a bit to use the `Link` component of the Router.
+
+```js
+import React from "react";
+import { Link } from "react-router-dom";
+
+const Navbar = () => {
+  return (
+    <nav className="navbar bg-success">
+      <h1>
+        <i className="fab fa-github" /> GitHub Finder
+      </h1>
+      <ul>
+        <li>
+          <Link to="/">Home</Link>
+          <Link to="/about">About</Link>
+        </li>
+      </ul>
+    </nav>
+  );
+};
+
+export default Navbar;
+```
+
+After that, update the `App.js` to use the `About` and `NotFound` components
+
+```js
+// App.js
+const App = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Navbar />
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={Search} />
+            <Route exact path="/about" component={About} />
+            <Route path="/*" component={NotFound}></Route>
+          </Switch>
+        </div>
+      </Router>
+    </div>
+  );
+};
+
+export default App;
+```
+
+Now, the application has multiple pages
+
+![alt text](demo_router.gif)
+
+## Create `User` component to display all information to user
+
+After we search the user, we want to see all information of selected one.
+
+Now, we will create the `User` component to (1) fetch the data then (2) display all of it.
+
+First, we have to update the `App.js` file first to specify the routing
+
+```js
+// App.js
+const App = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Navbar />
+        <div className="container">
+          <Switch>
+            <Route exact path="/" component={Search} />
+            <Route exact path="/about" component={About} />
+            {/* Add this line to specify the routing*/}
+            <Route exact path="/user/:id" component={User} />
+            <Route path="/*" component={NotFound}></Route>
+          </Switch>
+        </div>
+      </Router>
+    </div>
+  );
+};
+```
+
+Then, we have to update the `UserItem` a bit to use the `Link`
+
+```js
+// UserItem.js
+import React from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+const UserItem = (props) => {
+  const { login, avatar_url, html_url } = props.user;
+
+  return (
+    <div className="card text-center">
+      <img
+        src={avatar_url}
+        alt=""
+        className="round-img"
+        style={{ width: "60px" }}
+      />
+      <h3>{login}</h3>
+      <div>
+        <Link to={`/user/${login}`} className="btn btn-dark btn-sm my-1">
+          More
+        </Link>
+      </div>
+    </div>
+  );
+};
+
+export default UserItem;
+```
+
+Now, we can create the `User` component
+
+```js
+// User.js
+import axios from "axios";
+import React, { Fragment, useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+
+const User = () => {
+  const { id } = useParams();
+  const [user, setUser] = useState({});
+
+  const getUser = async (username) => {
+    try {
+      const response = await axios.get(
+        `https://api.github.com/users/${username}`
+      );
+      const data = response.data;
+      setUser(data);
+    } catch (error) {
+      console.error("Error fetching data:", error.message);
+    }
+  };
+
+  useEffect(() => {
+    getUser(id);
+  }, []);
+
+  const {
+    name,
+    avatar_url,
+    location,
+    bio,
+    company,
+    blog,
+    login,
+    html_url,
+    followers,
+    following,
+    public_repos,
+    public_gists,
+    hireable,
+  } = user;
+
+  return (
+    <Fragment>
+      <Link to="/" className="btn btn-light">
+        Back to Search
+      </Link>
+      Hireable: {hireable ? (
+        <i className="fas fa-check text-success" />
+      ) : (
+        <i className="fas fa-times-circle text-danger" />
+      )}
+      <div className="card grid-2">
+        <div className="all-center">
+          <img
+            src={avatar_url}
+            alt={name}
+            className="round-img"
+            style={{ width: "150px" }}
+          />
+          <h1>{name}</h1>
+          <p>{location}</p>
+        </div>
+        <div>
+          {bio && (
+            <Fragment>
+              <h3>Bio:</h3>
+              <p>{bio}</p>
+            </Fragment>
+          )}
+          <a
+            href={html_url}
+            className="btn btn-dark my-1"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Show Github Profile
+          </a>
+          <ul>
+            <li>
+              {login && (
+                <Fragment>
+                  <strong>Username: </strong>
+                  {login}
+                </Fragment>
+              )}
+            </li>
+            <li>
+              {company && (
+                <Fragment>
+                  <strong>Company: </strong>
+                  {company}
+                </Fragment>
+              )}
+            </li>
+            <li>
+              {blog && (
+                <Fragment>
+                  <strong>Website: </strong>
+                  <a href={blog} target="_blank" rel="noopener noreferrer">
+                    {blog}
+                  </a>
+                </Fragment>
+              )}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div className="card text-center">
+        <div className="badge badge-primary">Followers: {followers}</div>
+        <div className="badge badge-success">Following: {following}</div>
+        <div className="badge badge-light">Repository: {public_repos}</div>
+        <div className="badge badge-dark">Gist: {public_gists}</div>
+      </div>
+    </Fragment>
+  );
+};
+
+export default User;
+```
+
+Now, we can see the details information of the user
+
+![alt text](demo_user.gif)
+
+## Create `Repos` and `RepoItem` components
+
+## Refactor: Add `Api.js` to handle all API call
+
+## Refactor: Create `Home` component
+
+## Deploy on Netlify
