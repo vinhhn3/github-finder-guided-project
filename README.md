@@ -1,70 +1,92 @@
-# Getting Started with Create React App
+# Guided Project: Github Finder
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## What does it do?
 
-## Available Scripts
+It searches for all the Github users using the text inputted by the user in the form. It returns all the users matching the string in a grid format. Clicking on the `more` tab takes the user to a custom made page with the vital stats.
 
-In the project directory, you can run:
+## Archiecture Overall
 
-### `npm start`
+![alt text](image.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+In this project, we will create a React App and use GitHub API to search information then display it
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+![alt text](demo.gif)
 
-### `npm test`
+We will use following endpoints from GitHub API to make requests
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+GET https://api.github.com/users/                 # Get list of Users
+GET https://api.github.com/users/:username        # Get user information by name
+GET https://api.github.com/users/:username/repos  # Get repos information by name
+GET https://api.github.com/search/users?q=search  # Search users
+```
 
-### `npm run build`
+## Setup CSS
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To speed up the development time, we use the provided `App.css` on the file `/src/App.css`.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+This will contains all needed styling
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Setup Folder Structure
 
-### `npm run eject`
+Now, folder structure is very crucial. You will setup the folder structure like this.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+![alt text](image-1.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Create Navbar Component
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Now, it's time to create our first component. We will create the `Navbar` component then place it on `src/components/layout`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+```js
+// /src/components/layout/Navbar.js
+import React from "react";
 
-## Learn More
+const Navbar = () => {
+  return (
+    <nav className="navbar bg-success">
+      <h1>
+        <i className="fab fa-github" /> GitHub Finder
+      </h1>
+      <ul>
+        <li>
+          <a href="#>">Home</a>
+          <a href="#>">About</a>
+        </li>
+      </ul>
+    </nav>
+  );
+};
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export default Navbar;
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Then, update the `App.js` to display the Navbar
 
-### Code Splitting
+```js
+import "./App.css";
+import Navbar from "./components/layout/Navbar";
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+      <div className="container">
+        <h1>Hello from React</h1>
+      </div>
+    </div>
+  );
+}
 
-### Analyzing the Bundle Size
+export default App;
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+This is the result
+![alt text](image-2.png)
 
-### Making a Progressive Web App
+## Use `useEffect` to fetch data with `axios`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## Create `Users` and `UserItem` component to display all information
 
-### Advanced Configuration
+## Create Search Component
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+##
