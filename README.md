@@ -721,8 +721,61 @@ Now, we can see the details information of the user
 
 ## Create `Repos` and `RepoItem` components
 
-## Refactor: Add `Api.js` to handle all API call
+This is the exercise for students. Students will have to complete the remaining code inside of `User` then complete all `Repos` and `RepoItem` components by themselves
 
 ## Refactor: Create `Home` component
+
+To make the `App.js` a bit cleaner, we will create the `Home` component to wrap all contents
+
+```js
+// Home.js
+import React from "react";
+import { Route, Switch } from "react-router-dom/cjs/react-router-dom.min";
+import About from "../pages/About";
+import NotFound from "../pages/NotFound";
+import Search from "../users/Search";
+import User from "../users/User";
+
+const Home = () => {
+  return (
+    <div className="container">
+      <Switch>
+        <Route exact path="/" component={Search} />
+        <Route exact path="/about" component={About} />
+        <Route exact path="/user/:id" component={User} />
+        <Route path="/*" component={NotFound}></Route>
+      </Switch>
+    </div>
+  );
+};
+
+export default Home;
+```
+
+Then, update the `App.js` to use the `Home` component
+
+```js
+// App.js
+import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
+import "./App.css";
+import Home from "./components/layout/Home";
+import Navbar from "./components/layout/Navbar";
+
+const App = () => {
+  return (
+    <div className="App">
+      <Router>
+        <Navbar />
+        <Home />
+      </Router>
+    </div>
+  );
+};
+
+export default App;
+```
+
+You can see the `App.js` is very clean and minimal
 
 ## Deploy on Netlify

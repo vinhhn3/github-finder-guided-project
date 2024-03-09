@@ -1,10 +1,12 @@
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import Repos from "../repos/Repos";
 
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
+  const [repos, setRepos] = useState([]);
 
   const getUser = async (username) => {
     try {
@@ -18,8 +20,16 @@ const User = () => {
     }
   };
 
+  const getUserRepos = async (id) => {
+    // To be completed ...
+    // This is the small exercise for students
+    // Students will write the code to fetch the user's repositories
+    // Then display the repositories in the User component
+  };
+
   useEffect(() => {
     getUser(id);
+    getUserRepos(id);
   }, []);
 
   const {
@@ -111,6 +121,7 @@ const User = () => {
         <div className="badge badge-light">Repository: {public_repos}</div>
         <div className="badge badge-dark">Gist: {public_gists}</div>
       </div>
+      <Repos repos={repos} />
     </Fragment>
   );
 };
