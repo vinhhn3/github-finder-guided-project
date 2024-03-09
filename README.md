@@ -599,10 +599,12 @@ Now, we can create the `User` component
 import axios from "axios";
 import React, { Fragment, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom/cjs/react-router-dom.min";
+import Repos from "../repos/Repos";
 
 const User = () => {
   const { id } = useParams();
   const [user, setUser] = useState({});
+  const [repos, setRepos] = useState([]);
 
   const getUser = async (username) => {
     try {
@@ -616,8 +618,16 @@ const User = () => {
     }
   };
 
+  const getUserRepos = async (id) => {
+    // To be completed ...
+    // This is the small exercise for students
+    // Students will write the code to fetch the user's repositories
+    // Then display the repositories in the User component
+  };
+
   useEffect(() => {
     getUser(id);
+    getUserRepos(id);
   }, []);
 
   const {
@@ -708,6 +718,7 @@ const User = () => {
         <div className="badge badge-light">Repository: {public_repos}</div>
         <div className="badge badge-dark">Gist: {public_gists}</div>
       </div>
+      <Repos repos={repos} />
     </Fragment>
   );
 };
@@ -719,7 +730,7 @@ Now, we can see the details information of the user
 
 ![alt text](demo_user.gif)
 
-## Create `Repos` and `RepoItem` components
+## EXERCISE:Create `Repos` and `RepoItem` components
 
 This is the exercise for students. Students will have to complete the remaining code inside of `User` then complete all `Repos` and `RepoItem` components by themselves
 
@@ -778,4 +789,20 @@ export default App;
 
 You can see the `App.js` is very clean and minimal
 
+Below is the final folder application structure
+
 ## Deploy on Netlify
+
+Now, it's time to make the deployment.
+
+First, the project must be pushed on GitHub first.
+
+Then, we will use the Netlify to deploy on the internet
+
+![alt text](demo_deploy.gif)
+
+It takes some minutes to complete all deployment.
+
+You can use the link after finished
+
+https://sparkly-pixie-303670.netlify.app/
