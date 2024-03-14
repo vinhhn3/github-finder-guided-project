@@ -807,7 +807,7 @@ https://sparkly-pixie-303670.netlify.app/
 
 # EXERCISE
 
-- [ ] Task: Create `Repos` and `RepoItem` components. It will be used to display the Repos information and is included in `User` component
-- [ ] Refactor: create the `api.js` file to handle all API requests and use it to call API instead of using plain `axios`
-- [ ] Refactor: Refactor the code to include  the search options in the URL of the search page, so that when the user come back from user page to seah page, he does not loose the previous settings.
-- [ ] Task: Implement Dark theme / Light theme mechanic
+- [ ] `Refactor:` create the `api.js` file to handle all API requests and use it to call API instead of using plain `axios`
+- [ ] `Refactor:` Refactor the code to include the search options in the URL of the search page, so that when the user come back from user page to seah page, he does not loose the previous settings.
+- [ ] `Task:` Create `Repos` and `RepoItem` components. It will be used to display the Repos information and is included in `User` component
+- [ ] `Task:` Implement Dark theme / Light theme mechanic
