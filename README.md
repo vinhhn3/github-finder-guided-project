@@ -730,10 +730,6 @@ Now, we can see the details information of the user
 
 ![alt text](demo_user.gif)
 
-## EXERCISE:Create `Repos` and `RepoItem` components
-
-This is the exercise for students. Students will have to complete the remaining code inside of `User` then complete all `Repos` and `RepoItem` components by themselves
-
 ## Refactor: Create `Home` component
 
 To make the `App.js` a bit cleaner, we will create the `Home` component to wrap all contents
@@ -808,3 +804,10 @@ It takes some minutes to complete all deployment.
 You can use the link after finished
 
 https://sparkly-pixie-303670.netlify.app/
+
+# EXERCISE
+
+- [ ] Task: Create `Repos` and `RepoItem` components. It will be used to display the Repos information and is included in `User` component
+- [ ] Refactor: create the `api.js` file to handle all API requests and use it to call API instead of using plain `axios`
+- [ ] Refactor: Refactor the code to include  the search options in the URL of the search page, so that when the user come back from user page to seah page, he does not loose the previous settings.
+- [ ] Task: Implement Dark theme / Light theme mechanic
